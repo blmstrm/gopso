@@ -38,6 +38,8 @@ func main() {
 	}
     }
 
+    /*TODO Pass particle with method to threads*/
+
 }
 
 /*

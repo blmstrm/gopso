@@ -8,6 +8,8 @@ import (
 const (
     NROFVARIABLES = 7
     NROFPARTICLES = 100
+    LOWER_BOUND = 0
+    UPPER_BOUND = 1
     )
 
 type Particle struct{
@@ -17,28 +19,37 @@ type Particle struct{
     /*TODO Velocity*/
 }
 
-func main() {
-/*TODO Uncomment me
-  var globalSolution  [NROFVARIABLES]float64
- */
+/*Return random vector from uniform distribution of b_lo, b_up*/
+func getRandVector(inputVector [NROFVARIABLES] float64){
+  for i := range inputVector{
+    inputVector[i] = LOWER_BOUND+(rand.Float64()*UPPER_BOUND)
+  }
+}
 
-    rand.Seed(time.Now().UnixNano())
+/*Compare one particle to another*/
+func compareParticle (a Particle, b Particle) Particle{
+  return a
+}
+
+func main() {
+  /*TODO Uncomment me
+    var globalSolution  [NROFVARIABLES]float64
+   */
+
+  rand.Seed(time.Now().UnixNano())
     var particles = make([][]Particle,NROFPARTICLES)
     for i := range particles {
       particles[i] =  make([]Particle,NROFPARTICLES)
 	for j := range particles[i] {
-	  for k := range particles[i][j].currentSolution{
-	    /*TODO Should be ~U(b_lo,bo_up)*/
-	    particles[i][j].currentSolution[k] = rand.Float64()
-	  }
-	  particles[i][j].bestSolution = particles[i][j].currentSolution
+	  getRandVector(particles[i][j].currentSolution) 
+	    particles[i][j].bestSolution = particles[i][j].currentSolution
 	    /*TODO Compare bestSolution to globalSolution, if better overwrite
 	      Uncomment him. 
 	     */
 	}
     }
 
-    /*TODO Pass particle with method to threads*/
+  /*TODO Pass particle with method to threads*/
 
 }
 

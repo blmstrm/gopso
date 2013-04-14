@@ -13,16 +13,23 @@ const (
     )
 
 type Particle struct{
-  velocity float64
     currentSolution [NROFVARIABLES]float64
-    bestSolution [NROFVARIABLES]float64
-    /*TODO Velocity*/
+    bestSolution [NROFVARIABLES]float64	
+    velocity[NROFVARIABLES]float64	
 }
 
 /*Return random vector from uniform distribution of b_lo, b_up*/
 func getRandVector(inputVector [NROFVARIABLES] float64){
   for i := range inputVector{
     inputVector[i] = LOWER_BOUND+(rand.Float64()*UPPER_BOUND)
+  }
+}
+
+/*Return random init velocity from uniform distribution of -b_lo, b_up*/
+func getInitVelocity(inputVector [NROFVARIABLES] float64){
+  var limit = float64(UPPER_BOUND - LOWER_BOUND)
+  for i := range inputVector{
+    inputVector[i] = -limit+(rand.Float64()*(2*limit))
   }
 }
 
@@ -42,15 +49,14 @@ func main() {
       particles[i] =  make([]Particle,NROFPARTICLES)
 	for j := range particles[i] {
 	  getRandVector(particles[i][j].currentSolution) 
+	  getInitVelocity(particles[i][j].velocity) 
 	    particles[i][j].bestSolution = particles[i][j].currentSolution
 	    /*TODO Compare bestSolution to globalSolution, if better overwrite
 	      Uncomment him. 
 	     */
 	}
     }
-
   /*TODO Pass particle with method to threads*/
-
 }
 
 /*
